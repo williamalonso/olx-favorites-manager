@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { RefreshCw, ShoppingBag, Gamepad2 } from 'lucide-react';
-import GameCard from './components/GameCard'; // Importamos nosso novo componente
+import GameCard from './components/GameCard';
 import './App.css'; 
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API_URL = 'http://localhost:3001/favoritos';
+  const API_URL = 'https://getpantry.cloud/apiv1/pantry/eafd54ee-ea00-4501-8a1d-e6e2fc4a9e42/basket/favoritos';
 
   const carregarJogos = async () => {
     setLoading(true);
@@ -20,10 +20,15 @@ function App() {
         throw new Error('Não foi possível conectar ao servidor.');
       }
       const data = await response.json();
-      setJogos(data.reverse());
+      
+      // 2. MUDANÇA: O Pantry retorna um objeto { jogos: [...] }
+      // Se a lista "jogos" não existir ainda, usamos um array vazio []
+      const listaDeJogos = data.jogos || [];
+      
+      setJogos(listaDeJogos.reverse());
     } catch (err) {
       console.error(err);
-      setError("Não conseguimos conectar ao seu Banco de Dados (json-server). Verifique se ele está rodando na porta 3001.");
+      setError("Erro ao conectar ao Pantry. Verifique sua internet ou a URL.");
     } finally {
       setLoading(false);
     }
@@ -37,10 +42,29 @@ function App() {
     if (!confirm("Tem certeza que deseja remover este jogo da lista?")) return;
 
     try {
-      await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-      setJogos(jogos.filter(jogo => jogo.id !== id));
+      // 3. MUDANÇA: No Pantry, não dá pra deletar por ID na URL.
+      // A estratégia é: Criar a nova lista sem o item e salvar tudo de novo.
+      
+      const novaLista = jogos.filter(jogo => jogo.id !== id);
+
+      // Atualizamos o visual imediatamente para ficar rápido
+      setJogos(novaLista); 
+
+      // Enviamos a nova lista completa para o Pantry
+      await fetch(API_URL, {
+        method: 'POST', // O Pantry usa POST para atualizar/mesclar dados
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          jogos: novaLista // Enviamos o objeto com a chave "jogos" atualizada
+        })
+      });
+
     } catch (err) {
-      alert("Erro ao tentar deletar. O servidor está ativo?");
+      alert("Erro ao sincronizar a deleção com o servidor.");
+      // Se der erro, recarregamos a lista original para não ficar inconsistente
+      carregarJogos();
     }
   };
 
@@ -69,18 +93,14 @@ function App() {
         </div>
       )}
 
-      {/* Estado Vazio */}
       {!loading && !error && jogos.length === 0 && (
         <div className="empty-state">
           <ShoppingBag size={64} style={{ opacity: 0.5 }} />
           <h3>Sua lista está vazia</h3>
-          <p>Use a extensão do Chrome na página da OLX para salvar seus primeiros anúncios.</p>
+          <p>Seus jogos salvos aparecerão aqui.</p>
         </div>
       )}
 
-      {/* Aqui está a mágica da limpeza:
-         Em vez de 30 linhas de HTML, temos apenas uma linha chamando o componente.
-      */}
       <div className="games-grid">
         {jogos.map((jogo) => (
           <GameCard 
