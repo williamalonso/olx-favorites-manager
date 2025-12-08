@@ -57,9 +57,9 @@ Instale as dependências
 ```$ npm install```
 
 
-Configure sua API no arquivo src/App.jsx:
+Configure sua API criando o arquivo .env:
 
-```const API_URL = 'insira_sua_url';```
+```VITE_API_URL = 'insira_sua_url';```
 
 
 Rode o projeto:
