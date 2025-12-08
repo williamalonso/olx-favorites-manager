@@ -4,7 +4,7 @@ Caçador de Jogos 🎮
 
 <div align="center">
 <!-- Substitua o link abaixo por um print real do seu projeto depois -->
-<img src="https://www.google.com/search?q=https://placehold.co/600x400/7c3aed/ffffff%3Ftext%3DCa%C3%A7ador%2Bde%2BJogos%2BPreview" alt="Demonstração do Caçador de Jogos" width="600" />
+<img src="https://github.com/williamalonso/olx-favorites-manager/blob/master/public/home.png" alt="Demonstração do Caçador de Jogos" width="600" />
 </div>
 
 🤔 Sobre o Projeto?
