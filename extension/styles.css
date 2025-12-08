@@ -1,0 +1,30 @@
+#btn-save-game-extension {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99999; /* Fica acima de tudo */
+  
+  background-color: #7c3aed; /* Roxo do seu tema */
+  color: white;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  
+  border: none;
+  border-radius: 50px;
+  padding: 15px 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+#btn-save-game-extension:hover {
+  background-color: #6d28d9;
+  transform: scale(1.05) translateY(-2px);
+}
+
+#btn-save-game-extension:disabled {
+  background-color: #475569;
+  cursor: not-allowed;
+  transform: none;
+}

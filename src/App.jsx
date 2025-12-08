@@ -8,7 +8,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API_URL = 'https://getpantry.cloud/apiv1/pantry/eafd54ee-ea00-4501-8a1d-e6e2fc4a9e42/basket/favoritos';
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const carregarJogos = async () => {
     setLoading(true);
