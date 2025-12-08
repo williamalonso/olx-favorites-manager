@@ -1,0 +1,44 @@
+{
+  "favoritos": [
+    {
+      "id": "1",
+      "title": "God of War Ragnarök - PS5 (Seminovos)",
+      "price": "R$ 180,00",
+      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png",
+      "link": "https://www.olx.com.br",
+      "date": "08/12/2025"
+    },
+    {
+      "id": "2",
+      "title": "Elden Ring - PS4 (Atualização Grátis)",
+      "price": "R$ 150,00",
+      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/phvVT0qZfcRms5qDAk0SI3CM.png",
+      "link": "https://www.olx.com.br",
+      "date": "07/12/2025"
+    },
+    {
+      "id": "3",
+      "title": "Spider-Man Miles Morales - Lacrado",
+      "price": "R$ 90,00",
+      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202008/1020/T45iRn1bfiWc8z5cxC6Ibazq.png",
+      "link": "https://www.olx.com.br",
+      "date": "06/12/2025"
+    },
+    {
+      "id": "4",
+      "title": "The Last of Us Part II - PS4",
+      "price": "R$ 75,00",
+      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202312/0117/1c6b1279930c14188b89e63e264273820615951d8d85f524.jpg",
+      "link": "https://www.olx.com.br",
+      "date": "05/12/2025"
+    },
+    {
+      "id": "5",
+      "title": "Hogwarts Legacy - PS5 Deluxe",
+      "price": "R$ 220,00",
+      "image": "https://image.api.playstation.com/vulcan/ap/rnd/202208/0921/dR9KJAKDW2izPbptHQbh3rnj.png",
+      "link": "https://www.olx.com.br",
+      "date": "01/12/2025"
+    }
+  ]
+}
