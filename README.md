@@ -7,7 +7,9 @@ Caçador de Jogos 🎮
 <img src="https://github.com/williamalonso/olx-favorites-manager/blob/master/public/home.png" alt="Demonstração do Caçador de Jogos" width="600" />
 </div>
 
-🤔 Sobre o Projeto?
+---
+
+### 🤔 Sobre o Projeto?
 
 O Caçador de Jogos é um ecossistema simples para monitorar anúncios de jogos de PS4 e PS5 encontrados na OLX.
 
@@ -19,7 +21,9 @@ Dashboard Web: Um site onde você visualiza sua lista de desejos e gerencia os j
 
 Diferente da versão inicial local, agora o projeto utiliza Pantry Cloud como banco de dados, permitindo que você acesse seus saves tanto do PC quanto do celular (via Vercel).
 
-🚀 Tecnologias
+---
+
+### 🚀 Tecnologias
 
 Esse projeto utiliza as seguintes tecnologias:
 
@@ -29,8 +33,9 @@ Esse projeto utiliza as seguintes tecnologias:
 - [Chrome Extensions API](https://developer.chrome.com/docs/extensions/reference/api?hl=pt-br)
 - [Lucide React (Ícones)](https://lucide.dev/guide/packages/lucide-react)
 
+---
 
-🙅 Instalação e Uso
+## 🙅 Instalação e Uso
 
 Pré-requisitos
 
@@ -42,13 +47,13 @@ Clone o repositório e instale as dependências:
 
 ```
 # Clone o repositório
-$ git clone [https://github.com/SEU_USUARIO/cacador-de-jogos.git](https://github.com/SEU_USUARIO/cacador-de-jogos.git)
+$ git clone git@github.com:williamalonso/olx-favorites-manager.git
 ```
 
-# Entre na pasta
+Entre na pasta
 ```$ cd cacador-de-jogos```
 
-# Instale as dependências
+Instale as dependências
 ```$ npm install```
 
 
