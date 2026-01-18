@@ -3,12 +3,14 @@ import { RefreshCw, ShoppingBag, Gamepad2 } from 'lucide-react';
 import GameCard from './components/GameCard';
 import './App.css'; 
 import Ordenacao from './components/Ordenacao';
+import Busca from './components/Busca';
 
 function App() {
   const [jogos, setJogos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [ordem, setOrdem] = useState('recente');
+  const [termoBusca, setTermoBusca] = useState('');
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -18,6 +20,10 @@ function App() {
     const apenasNumeros = precoString.replace(/[^\d,]/g, '').replace(',', '.');
     return parseFloat(apenasNumeros) || 0;
   };
+
+  const jogosFiltrados = jogos.filter((jogo) =>
+    jogo.title.toLowerCase().includes(termoBusca.toLowerCase())
+  );
   
   const carregarJogos = async () => {
     setLoading(true);
@@ -102,14 +108,21 @@ function App() {
             <p>Monitorando preços de PS4/PS5</p>
           </div>
         </div>
+
+        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', alignItems: 'center', margin: '20px 0', justifyContent: 'center' }}>
+          <div>
+            <Busca termoBusca={termoBusca} setTermoBusca={setTermoBusca} />
+          </div>
+          <div>
+            <Ordenacao ordemAtual={ordem} setOrdem={setOrdem} />
+          </div>
+        </div>
         
         <button onClick={carregarJogos} className="btn-refresh" disabled={loading}>
           <RefreshCw size={16} className={loading ? "spin" : ""} />
           {loading ? "Atualizando..." : "Atualizar Lista"}
         </button>
       </header>
-
-      <Ordenacao ordemAtual={ordem} setOrdem={setOrdem} />
 
       {error && (
         <div className="error-banner">
@@ -126,13 +139,15 @@ function App() {
       )}
 
       <div className="games-grid">
-        {jogos.map((jogo) => (
-          <GameCard 
-            key={jogo.id} 
-            jogo={jogo} 
-            onDelete={deletarJogo} 
-          />
-        ))}
+        {jogosFiltrados.length > 0 ? (
+          jogosFiltrados.map((jogo) => (
+            <GameCard key={jogo.id} jogo={jogo} deletarJogo={deletarJogo} />
+          ))
+        ) : (
+          <p style={{ color: '#71717a', textAlign: 'center', gridColumn: '1/-1' }}>
+            Nenhum produto encontrado com esse nome.
+          </p>
+        )}
       </div>
     </div>
   );
