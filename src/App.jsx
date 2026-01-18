@@ -14,16 +14,25 @@ function App() {
 
   const API_URL = import.meta.env.VITE_API_URL;
 
-  // Função para converter "R$ 1.200,50" em um número real 1200.50
+  // 1. Primeiro filtramos pelo nome (Busca)
+  let listaProcessada = jogos.filter((jogo) =>
+    jogo.title.toLowerCase().includes(termoBusca.toLowerCase())
+  );
+
+  // 2. Depois ordenamos a lista resultante (Ordenação)
   const tratarPrecoParaNumero = (precoString) => {
     if (!precoString) return 0;
     const apenasNumeros = precoString.replace(/[^\d,]/g, '').replace(',', '.');
     return parseFloat(apenasNumeros) || 0;
   };
 
-  const jogosFiltrados = jogos.filter((jogo) =>
-    jogo.title.toLowerCase().includes(termoBusca.toLowerCase())
-  );
+  if (ordem === 'menor-preco') {
+    listaProcessada.sort((a, b) => tratarPrecoParaNumero(a.price) - tratarPrecoParaNumero(b.price));
+  } else if (ordem === 'maior-preco') {
+    listaProcessada.sort((a, b) => tratarPrecoParaNumero(b.price) - tratarPrecoParaNumero(a.price));
+  } else {
+    listaProcessada.sort((a, b) => b.id - a.id); // Recentes
+  }
   
   const carregarJogos = async () => {
     setLoading(true);
@@ -64,7 +73,7 @@ function App() {
 
   useEffect(() => {
     carregarJogos();
-  }, [ordem]);
+  }, []);
 
   const deletarJogo = async (id) => {
     if (!confirm("Tem certeza que deseja remover este jogo da lista?")) return;
@@ -139,8 +148,8 @@ function App() {
       )}
 
       <div className="games-grid">
-        {jogosFiltrados.length > 0 ? (
-          jogosFiltrados.map((jogo) => (
+        {listaProcessada.length > 0 ? (
+          listaProcessada.map((jogo) => (
             <GameCard key={jogo.id} jogo={jogo} deletarJogo={deletarJogo} />
           ))
         ) : (
