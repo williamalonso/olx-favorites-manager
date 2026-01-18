@@ -2,14 +2,23 @@ import { useState, useEffect } from 'react';
 import { RefreshCw, ShoppingBag, Gamepad2 } from 'lucide-react';
 import GameCard from './components/GameCard';
 import './App.css'; 
+import Ordenacao from './components/Ordenacao';
 
 function App() {
   const [jogos, setJogos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [ordem, setOrdem] = useState('recente');
 
   const API_URL = import.meta.env.VITE_API_URL;
 
+  // Função para converter "R$ 1.200,50" em um número real 1200.50
+  const tratarPrecoParaNumero = (precoString) => {
+    if (!precoString) return 0;
+    const apenasNumeros = precoString.replace(/[^\d,]/g, '').replace(',', '.');
+    return parseFloat(apenasNumeros) || 0;
+  };
+  
   const carregarJogos = async () => {
     setLoading(true);
     setError(null);
@@ -25,7 +34,20 @@ function App() {
       // Se a lista "jogos" não existir ainda, usamos um array vazio []
       const listaDeJogos = data.jogos || [];
       
-      setJogos(listaDeJogos.reverse());
+      // APLICANDO A ORDENAÇÃO
+      if (ordem === 'menor-preco') {
+      // Do menor para o maior
+      listaDeJogos.sort((a, b) => tratarPrecoParaNumero(a.price) - tratarPrecoParaNumero(b.price));
+    } else if (ordem === 'maior-preco') {
+      // Do maior para o menor
+      listaDeJogos.sort((a, b) => tratarPrecoParaNumero(b.price) - tratarPrecoParaNumero(a.price));
+    } else {
+      // 'recente': Mostra os IDs maiores (mais novos) primeiro
+      // Como o ID é Date.now(), o número maior é o mais atual
+      listaDeJogos.sort((a, b) => b.id - a.id);
+    }
+
+      setJogos(listaDeJogos);
     } catch (err) {
       console.error(err);
       setError("Erro ao conectar ao Pantry. Verifique sua internet ou a URL.");
@@ -36,7 +58,7 @@ function App() {
 
   useEffect(() => {
     carregarJogos();
-  }, []);
+  }, [ordem]);
 
   const deletarJogo = async (id) => {
     if (!confirm("Tem certeza que deseja remover este jogo da lista?")) return;
@@ -86,6 +108,8 @@ function App() {
           {loading ? "Atualizando..." : "Atualizar Lista"}
         </button>
       </header>
+
+      <Ordenacao ordemAtual={ordem} setOrdem={setOrdem} />
 
       {error && (
         <div className="error-banner">
